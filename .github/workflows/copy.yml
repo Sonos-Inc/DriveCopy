@@ -1,0 +1,60 @@
+name: Copy Workflow
+
+on:
+  workflow_dispatch: # manual trigger via GitHub UI
+  schedule:
+    - cron: '0 20 * * 4'  # runs at 3pm EST on thur day(s)
+
+jobs:
+  run-script:
+    runs-on: windows-latest
+    timeout-minutes: 1440  # 24 hours
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Download and extract latest GAM release
+      shell: pwsh
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mkdir C:\gam
+        cd C:\gam
+
+        $headers = @{
+          Authorization = "Bearer $env:GITHUB_TOKEN"
+          "User-Agent"  = "Sonos-Automation"
+        }
+
+        $response = Invoke-RestMethod -Uri "https://api.github.com/repos/GAM-team/GAM/releases/latest" -Headers $headers
+        $windowsAsset = $response.assets | Where-Object { $_.name -like "*windows-x86_64.zip" }
+        $zipName = $windowsAsset.name
+        $downloadUrl = $windowsAsset.browser_download_url
+
+        Invoke-WebRequest $downloadUrl -OutFile $zipName
+        Expand-Archive $zipName -DestinationPath .
+
+    - name: Restore GAM secrets
+      shell: pwsh
+      env:
+        CLIENT_SECRETS_B64: ${{ secrets.CLIENT_SECRETS }}
+        OAUTH2_B64: ${{ secrets.OAUTH2 }}
+        OAUTH2SERVICE_B64: ${{ secrets.OAUTH2SERVICE }}
+      run: |
+        mkdir C:\gam_config
+
+        $clientSecrets    = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($env:CLIENT_SECRETS_B64))
+        $oauth2           = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($env:OAUTH2_B64))
+        $oauth2Service    = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($env:OAUTH2SERVICE_B64))
+
+        Set-Content -Path "C:\gam_config\client_secrets.json" -Value $clientSecrets -Encoding UTF8
+        Set-Content -Path "C:\gam_config\oauth2.txt" -Value $oauth2 -Encoding UTF8
+        Set-Content -Path "C:\gam_config\oauth2service.json" -Value $oauth2Service -Encoding UTF8
+
+        "GAMCFGDIR=C:\gam_config" | Out-File -Append $env:GITHUB_ENV
+        
+    - name: Run PowerShell
+      run: |
+        $env:Path += ";C:\gam\gam7\"
+        powershell.exe -ExecutionPolicy Bypass -File .\runner\Copy\CopyProcess.ps1
