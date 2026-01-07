@@ -1,9 +1,9 @@
-name: Copy Workflow
+name: Copy process Workflow
 
 on:
   workflow_dispatch: # manual trigger via GitHub UI
 #  schedule:
-#    - cron: '0 20 * * 4'  # runs at 3pm EST on thur day(s)
+#    - cron: "40 20 * * *"
 
 jobs:
   run-script:
@@ -55,6 +55,8 @@ jobs:
         "GAMCFGDIR=C:\gam_config" | Out-File -Append $env:GITHUB_ENV
         
     - name: Run PowerShell
+      shell: pwsh
+      working-directory: ${{ github.workspace }}
       run: |
         $env:Path += ";C:\gam\gam7\"
-        powershell.exe -ExecutionPolicy Bypass -File .\DriveCopyRunner.ps1
+        powershell.exe -ExecutionPolicy Bypass -File .\runner\Copy\DriveCopyRunner.ps1
