@@ -57,4 +57,4 @@ jobs:
     - name: Run PowerShell
       run: |
         $env:Path += ";C:\gam\gam7\"
-        powershell.exe -ExecutionPolicy Bypass -File .\DriveCopyProcess.ps1
+        powershell.exe -ExecutionPolicy Bypass -File .\DriveCopyRunner.ps1
