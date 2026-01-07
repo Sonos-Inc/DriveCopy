@@ -29,7 +29,7 @@
 param (
   [Parameter(Mandatory = $false)]
   [ValidateNotNullOrEmpty()]
-  [string]$ChildPath = "$env:GITHUB_WORKSPACE\runner\copy\Copy-SingleDriveToShare.ps1",
+  [string]$ChildPath = "$env:GITHUB_WORKSPACE\Copy-SingleDriveToShare.ps1",
 
   [Parameter(Mandatory = $false)]
   [ValidateNotNullOrEmpty()]
@@ -46,9 +46,9 @@ param (
 $trackingDir = $env:GITHUB_WORKSPACE
 
 # ---------- Pre-flight ----------
-Import-Module "$trackingDir\runner\copy\Send-alert.psm1" -ErrorAction Stop
-Import-Module "$trackingDir\runner\copy\Send-EmailReport.psm1" -ErrorAction Stop
-Import-Module "$trackingDir\runner\copy\Update-GoogleSheet.psm1" -ErrorAction Stop
+Import-Module "$trackingDir\Send-alert.psm1" -ErrorAction Stop
+Import-Module "$trackingDir\Send-EmailReport.psm1" -ErrorAction Stop
+Import-Module "$trackingDir\Update-GoogleSheet.psm1" -ErrorAction Stop
 
 $gam = 'gam'
 if (-not (Get-Command $gam -ErrorAction SilentlyContinue)) {

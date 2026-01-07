@@ -35,7 +35,7 @@
 
 .NOTES
     - Requires GAM installed and in PATH.
-    - Requires Send-Alert.psm1 and Send-EmailReport.psm1 modules in .\runner\copy\
+    - Requires Send-Alert.psm1 and Send-EmailReport.psm1 modules in .\
     - Child script must output valid JSON per user.
     - Designed for daily automation execution.
 #>
@@ -44,7 +44,7 @@
 param (
     [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]
-    [string]$ChildPath = '.\runner\copy\Copy-SingleDriveToShare.ps1',
+    [string]$ChildPath = '.\Copy-SingleDriveToShare.ps1',
 
     [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]
@@ -68,8 +68,8 @@ if (-not (Get-Command -Name gam -ErrorAction SilentlyContinue)) {
 }
 
 try {
-    Import-Module '.\runner\copy\Send-Alert.psm1' -ErrorAction Stop
-    Import-Module '.\runner\copy\Send-EmailReport.psm1' -ErrorAction Stop
+    Import-Module '.\Send-Alert.psm1' -ErrorAction Stop
+    Import-Module '.\Send-EmailReport.psm1' -ErrorAction Stop
 }
 catch {
     Write-Error "Failed to import one or more required modules: $($_.Exception.Message)"

@@ -14,7 +14,7 @@ function ValidateEmail {
     )
 
     try {
-        Import-Module '.\runner\copy\Send-alert.psm1' -ErrorAction Stop
+        Import-Module '.\Send-alert.psm1' -ErrorAction Stop
 
         # Validate GAM presence
         if (-not (Get-Command -Name gam -ErrorAction SilentlyContinue)) {

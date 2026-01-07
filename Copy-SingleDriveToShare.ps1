@@ -73,7 +73,7 @@ param (
 $trackingDir = $env:GITHUB_WORKSPACE
 
 if (-not ($WhatIf -and $NoEmail)) {
-    Import-Module $trackingDir\runner\copy\ElapsedTime.psm1 -ErrorAction SilentlyContinue
+    Import-Module $trackingDir\ElapsedTime.psm1 -ErrorAction SilentlyContinue
     ElapsedTime -ErrorAction SilentlyContinue
 }
 
@@ -93,12 +93,12 @@ if (-not (Get-Command $gamExe -ErrorAction SilentlyContinue)) {
 # Imports and capacity gate
 if (-not $WhatIf) {
     try {
-        Import-Module "$trackingDir\runner\copy\Update-GoogleSheet.psm1" -ErrorAction Stop
-        Import-Module "$trackingDir\runner\copy\rotate\Get-TotalRemainMain.psm1" -ErrorAction Stop
-        Import-Module "$trackingDir\runner\copy\Send-alert.psm1" -ErrorAction Stop
-        Import-Module "$trackingDir\runner\copy\SendManagerEmail.psm1" -ErrorAction Stop
-        Import-Module "$trackingDir\runner\copy\Set-UserCopyState.psm1" -ErrorAction Stop
-        Import-Module "$trackingDir\runner\copy\Get-LegacyDrive.psm1" -ErrorAction Stop
+        Import-Module "$trackingDir\Update-GoogleSheet.psm1" -ErrorAction Stop
+        Import-Module "$trackingDir\rotate\Get-TotalRemainMain.psm1" -ErrorAction Stop
+        Import-Module "$trackingDir\Send-alert.psm1" -ErrorAction Stop
+        Import-Module "$trackingDir\SendManagerEmail.psm1" -ErrorAction Stop
+        Import-Module "$trackingDir\Set-UserCopyState.psm1" -ErrorAction Stop
+        Import-Module "$trackingDir\Get-LegacyDrive.psm1" -ErrorAction Stop
     }
     catch { throw $($_.Exception.Message) }
 

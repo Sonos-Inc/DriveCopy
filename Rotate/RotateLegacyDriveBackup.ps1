@@ -27,7 +27,7 @@
 
 .NOTES
     - Requires GAM installed and available in PATH.
-    - Requires Send-Alert.psm1 module in .\runner\copy\
+    - Requires Send-Alert.psm1 module in .\
     - All GAM operations validated via $LASTEXITCODE.
     - Idempotent by design — safe to re-run.
 #>
@@ -52,7 +52,7 @@ try {
     # ---------------------------------------------------------------------
     # 0. Import dependencies and validate environment
     # ---------------------------------------------------------------------
-    Import-Module "$env:GITHUB_WORKSPACE\runner\copy\Send-Alert.psm1" -Force -ErrorAction Stop
+    Import-Module "$env:GITHUB_WORKSPACE\Send-Alert.psm1" -Force -ErrorAction Stop
 
     $trackingDir = $env:GITHUB_WORKSPACE   # or Join-Path $PSScriptRoot '..\..' etc, as you prefer
     $csvPath = Join-Path $trackingDir 'CountParentFolder.csv'
@@ -97,7 +97,7 @@ try {
     # ---------------------------------------------------------------------
     # 2. Evaluate usage via CountParentFolder.ps1
     # ---------------------------------------------------------------------
-    $CountResult = & "$env:GITHUB_WORKSPACE\runner\copy\Rotate\CountParentFolder.ps1" -AdminUser $AdminUser -DocID $DocID
+    $CountResult = & "$env:GITHUB_WORKSPACE\Rotate\CountParentFolder.ps1" -AdminUser $AdminUser -DocID $DocID
 
     if (
         -not $CountResult -or

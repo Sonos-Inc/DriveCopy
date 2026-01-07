@@ -54,7 +54,7 @@ function Get-TotalRemainMain {
             throw "GAM tool is not found. Please make sure it is installed and accessible in the system PATH."
         }
 
-        Import-Module "$env:GITHUB_WORKSPACE\runner\copy\Send-alert.psm1" -ErrorAction Stop
+        Import-Module "$env:GITHUB_WORKSPACE\Send-alert.psm1" -ErrorAction Stop
 
         $trackingDir = $env:GITHUB_WORKSPACE
 

@@ -34,8 +34,8 @@ $CTError = [PSCustomObject]@{
 }
 
 try {
-    Import-Module "$env:GITHUB_WORKSPACE\runner\copy\Send-Alert.psm1" -Force -ErrorAction Stop
-    Import-Module "$env:GITHUB_WORKSPACE\runner\copy\rotate\Get-LongTermSuspendedAccounts.psm1" -Force -ErrorAction Stop
+    Import-Module "$env:GITHUB_WORKSPACE\Send-Alert.psm1" -Force -ErrorAction Stop
+    Import-Module "$env:GITHUB_WORKSPACE\rotate\Get-LongTermSuspendedAccounts.psm1" -Force -ErrorAction Stop
 
     $trackingDir = $env:GITHUB_WORKSPACE   # or Join-Path $PSScriptRoot '..\..' etc, as you prefer
 

@@ -59,7 +59,7 @@ function Update-GoogleSheet {
 
     try {
         # Load the alerting module
-        Import-Module "$trackingDir\runner\copy\Send-Alert.psm1" -ErrorAction SilentlyContinue
+        Import-Module "$trackingDir\Send-Alert.psm1" -ErrorAction SilentlyContinue
 
         # Import drive info module and get current drive name
         try {

@@ -64,7 +64,7 @@ param (
 
 $trackingDir = $env:GITHUB_WORKSPACE
 
-Import-Module "$trackingDir\runner\copy\Send-Alert.psm1" -Force -ErrorAction Stop
+Import-Module "$trackingDir\Send-Alert.psm1" -Force -ErrorAction Stop
 
 # Estimate copy duration (minutes) based on file count.
 # Calibrated for MyDrive → SharedDrive transfers:
