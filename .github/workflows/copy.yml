@@ -2,8 +2,8 @@ name: Copy Workflow
 
 on:
   workflow_dispatch: # manual trigger via GitHub UI
-  schedule:
-    - cron: '0 20 * * 4'  # runs at 3pm EST on thur day(s)
+#  schedule:
+#    - cron: '0 20 * * 4'  # runs at 3pm EST on thur day(s)
 
 jobs:
   run-script:
